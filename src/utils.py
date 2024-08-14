@@ -7,6 +7,9 @@ from sklearn.model_selection import GridSearchCV
 import os
 import sys
 from exception import CustomException
+from sklearn.metrics import accuracy_score, f1_score
+from sklearn.model_selection import GridSearchCV,RandomizedSearchCV
+
 
 def save_object(file_path, obj):
     try:
