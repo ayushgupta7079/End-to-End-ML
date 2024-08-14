@@ -34,15 +34,17 @@ class ModelTrainer:
     def __init__(self):
         self.model_trainer_config = ModelTrainerConfig()
 
-    def initiate_model_trainer(self, train_array, test_array):
+    def initiate_model_trainer(self, X_train,X_test, y_train,y_test):
         try:
             logging.info("Split training and test input data")
-            X_train, y_train, X_test, y_test = (
-                train_array[:, :-1],
-                train_array[:, -1],
-                test_array[:, :-1],
-                test_array[:, -1]
-            )
+            # X_train, y_train, X_test, y_test = (
+            #     train_array[:, :-1],
+            #     train_array[:, -1],
+            #     test_array[:, :-1],
+            #     test_array[:, -1]
+            # )
+            # print("XTRAIN SHAPE : INSIDE MODEL TRAINER")  
+            # print(X_train.shape)
 
             # Initialize an empty list to store model scores
             model_scores = []
@@ -60,9 +62,9 @@ class ModelTrainer:
             ('Support Vector Machine', SVC(random_state=42, class_weight='balanced'),
                 {'C': [0.1, 1, 10],
                 'gamma': ['scale', 'auto']}),  # Add hyperparameters for SVM
-            ('Logistic Regression', LogisticRegression(random_state=42, class_weight='balanced'),
-                {'C': [0.1, 1, 10],
-                'penalty': ['l1', 'l2']}),  # Add hyperparameters for Logistic Regression
+            # ('Logistic Regression', LogisticRegression(random_state=42, class_weight='balanced'),
+            #     {'C': [0.1, 1, 10],
+            #     'penalty': ['l1', 'l2']}),  # Add hyperparameters for Logistic Regression
             ('K-Nearest Neighbors', KNeighborsClassifier(),
                 {'n_neighbors': [3, 5, 7],
                 'weights': ['uniform', 'distance']}),  # Add hyperparameters for KNN
@@ -141,3 +143,6 @@ class ModelTrainer:
 
         except Exception as e:
           raise CustomException(e, sys)
+      
+      
+      

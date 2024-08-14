@@ -19,7 +19,7 @@ from utils import save_object
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path=os.path.join('artifact',"proprocessor.pkl")
+    preprocessor_obj_file_path=os.path.join('artifact',"preprocessor.pkl")
 
 class DataTransformation:
     def __init__(self):
@@ -38,7 +38,7 @@ class DataTransformation:
                 "PaperlessBilling", "PaymentMethod"
             ]
             
-            numerical_columns = ["tenure", "MonthlyCharges", "TotalCharges"]
+            numerical_columns = ["tenure", "MonthlyCharges", "TotalCharges","SeniorCitizen"]
             
             # Define pipelines for numerical and categorical features
             num_pipeline = Pipeline(
@@ -93,14 +93,15 @@ class DataTransformation:
 
             # Extract features and target
             X_train_df = train_df[feature_columns]
-            y_train_df = train_df[target_column_name]
+            y_train_df = train_df[target_column_name].map({'Yes': 1, 'No': 0})
 
             X_test_df = test_df[feature_columns]
-            y_test_df = test_df[target_column_name]
+            y_test_df = test_df[target_column_name].map({'Yes': 1, 'No': 0})
 
             logging.info("Obtaining preprocessing object")
 
             # Get preprocessing object
+
             preprocessing_obj = self.get_data_transformer_object()
 
             # Apply preprocessing
@@ -108,7 +109,6 @@ class DataTransformation:
 
             X_train_arr = preprocessing_obj.fit_transform(X_train_df)
             X_test_arr = preprocessing_obj.transform(X_test_df)
-
             y_train_arr = np.array(y_train_df)
             y_test_arr = np.array(y_test_df)
 

@@ -51,10 +51,11 @@ if __name__=="__main__":
   obj = DataIngestion()
   train_data,test_data = obj.initiate_data_ingestion()
   data_transformation = DataTransformation()
-  train_arr,test_arr,_,_,_ = data_transformation.initiate_data_transformation(train_data,test_data)
+  X_train_arr,X_test_arr,y_train_arr, y_test_arr,_ = data_transformation.initiate_data_transformation(train_data,test_data)
+
   modeltrainer = ModelTrainer()
   
-  best_model, accuracy = modeltrainer.initiate_model_trainer(train_arr,test_arr)
+  best_model, accuracy = modeltrainer.initiate_model_trainer(X_train_arr,X_test_arr,y_train_arr,y_test_arr)
   print("Best model :",best_model)
   print("Accuracy :",accuracy)
   
